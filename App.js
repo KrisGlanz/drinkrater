@@ -1,85 +1,77 @@
 import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as SplashScreen from 'expo-splash-screen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
+import {useState} from 'react';
 
 SplashScreen.preventAutoHideAsync();
-  setTimeout(SplashScreen.hideAsync, 2000);
+setTimeout(SplashScreen.hideAsync, 2000);
 
-const homeImage = require('./assets/Images/art.png')
-const mileImage = require('./assets/Images/mile.png')
-const pierImage = require('./assets/Images/pier.png')
-const waterImage = require('./assets/Images/water.png')
-const willisImage = require('./assets/Images/willis.png')
+const homeImage = require('./assets/Images/Tiki.jpg')
+const bushwood = require('./assets/Images/bushwood.jpg')
+const German_Beer = require('./assets/Images/German_Beer.jpg')
 
 
- function handleButtonPress(url) {
-  return (
-    WebBrowser.openBrowserAsync(url)
-    );
-  } 
-
-  function renderButton(url) {
-    return (
-    <TouchableOpacity
-      onPress={() => handleButtonPress(url)}
-      style={styles.button}
-    >
-    <Text style={styles.text}>More Infomation</Text>    
-    </TouchableOpacity>
-    );
-  }
 
 
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Image style={styles.image}  source={homeImage}/>
-      {renderButton('https://www.artic.edu/')}
+      <Image style={styles.image} source={homeImage} />
     </View>
   );
 }
 
-function MagnificentMileScreen({}) {
+function BushwoodScreen({ }) {
+  const [show, setShow] = useState(true);
+  const [rate, setRate] = useState(rate);
+  
   return (
     <View style={styles.container}>
-      <Image style={styles.image}  source={mileImage}/>
-      {renderButton('https://www.themagnificentmile.com/')}
+      <Image style={styles.image} source={bushwood} />
+      <Text>Rate the drink from 1-5 Stars</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="How many stars?"
+        onChangeText={newRate => {setRate(newRate); setShow(true);}}
+        />
+        <Pressable style={styles.button}
+        onPress={() => {setRate((parseInt(rate) + 12)/4); setShow(false); }}>
+        <Text style={styles.text}>Rate the drink</Text>
+        </Pressable>
+        <Text style={styles.displayText}>
+        {show ? '' : "The current rating is now: " + rate + " Stars" }
+      </Text>
     </View>
   );
 }
 
-function NavyPierScreen({}) {
+function GermanScreen({ }) {
+  const [show, setShow] = useState(true);
+  const [rate, setRate] = useState(rate);
+  
   return (
     <View style={styles.container}>
-      <Image style={styles.image}  source={pierImage}/>
-      {renderButton('https://navypier.org/')}
+      <Image style={styles.image} source={German_Beer} />
+      <Text>Rate the drink from 1-5 Stars</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="How many stars?"
+        onChangeText={newRate => {setRate(newRate); setShow(true);}}
+        />
+        <Pressable style={styles.button}
+        onPress={() => {setRate((parseInt(rate) + 12)/4); setShow(false); }}>
+        <Text style={styles.text}>Rate the drink</Text>
+        </Pressable>
+        <Text style={styles.displayText}>
+        {show ? '' : "The current rating is now: " + rate + " Stars" }
+      </Text>
     </View>
   );
 }
 
-function WaterTowerScreen({}) {
-  return (
-    <View style={styles.container}>
-      <Image style={styles.image}  source={waterImage}/>
-      {renderButton('https://www.chicago.gov/city/en/depts/dca/supp_info/city_gallery_in_thehistoricwatertower.html')}
-    </View>
-  );
-}
-
-function WillisTowerScreen({}) {
-  return (
-    <View style={styles.container}>
-      <Image style={styles.image}  source={willisImage}/>
-      {renderButton('https://www.willistower.com/')}
-    </View>
-  );
-}
 
 
 const Drawer = createDrawerNavigator();
@@ -87,12 +79,19 @@ const Drawer = createDrawerNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName='Home'>
-        <Drawer.Screen name="Art Institute of Chicago" component={HomeScreen} />
-        <Drawer.Screen name="Magnificent Mile" component={MagnificentMileScreen} />
-        <Drawer.Screen name="Navy Pier" component={NavyPierScreen} />
-        <Drawer.Screen name="Water Tower" component={WaterTowerScreen} />
-        <Drawer.Screen name="Willis Tower" component={WillisTowerScreen} />
+      <Drawer.Navigator initialRouteName='Home'
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#00ccff',
+          },
+          drawerStyle : {
+            backgroundColor: '#00ccff',
+          }
+        }}
+      >
+        <Drawer.Screen name="The Tiki Lounge" component={HomeScreen} />
+        <Drawer.Screen name="Bushwood Beer" component={BushwoodScreen} />
+        <Drawer.Screen name="German Beer" component={GermanScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -103,13 +102,15 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ebd6a0',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#563822'
   },
   image: {
-    width: 240,
-    height: 360,
+    width: 300,
+    height: 500,
+    borderRadius: 20,
   },
   button: {
     margin: 10,
@@ -123,5 +124,13 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     textAlign: 'center',
+  },
+  input : {
+    height: 70,
+    width: 250,
+    textAlign: 'center',
+    fontSize: 20,
+    lineHeight: 30,
+    fontWeight: 'bold',
   },
 });
