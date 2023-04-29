@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "Bushwood Beer",
+      "rating": "4",
+      "content": "This is a drinkable beer" ,
+      "author": "Ty Webb"
+    },
+    {
+      "title": "Its a beer",
+      "rating": "4",
+      "content": "Hey now lets drink" ,
+      "author": "Joe Shmo"
+    },
+    {
+      "title": "Perfect for hunting",
+      "rating": "4",
+      "content": "Great for when you are out hunting a gopher" ,
+      "author": "Carl Spackler"
+    }
+  ]
+}
